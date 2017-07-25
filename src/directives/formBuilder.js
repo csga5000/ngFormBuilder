@@ -209,7 +209,29 @@ module.exports = ['debounce', function(debounce) {
           setNumPages();
         });
 
-        $scope.formComponents = _cloneDeep(formioComponents.components);
+        if (window.FormBuilderConfig) {
+          $scope.formComponents = {};
+          FormBuilderConfig.fields.forEach(function(field) {
+            var comp = _cloneDeep(formioComponents.components[field.component]);
+            for (var compProp in field.component_properties) {
+              comp[compProp] = field.component_properties[compProp];
+            }
+            for (var settingKey in field.settings) {
+              comp.settings[settingKey] = field.settings[settingKey];
+            }
+            $scope.formComponents['custom_field_'+field.name] = comp;
+          })
+          for (var groupKey in formioComponents.groups) {
+            formioComponents.groups[groupKey].disabled = true;
+          }
+          for (groupKey in FormBuilderConfig.groups) {
+            formioComponents.groups[groupKey] = FormBuilderConfig.groups[groupKey];
+          }
+        }
+        else {
+          $scope.formComponents = _cloneDeep(formioComponents.components);
+        }
+
         _each($scope.formComponents, function(component, key) {
           component.settings.isNew = true;
           if (component.settings.hasOwnProperty('builder') && !component.settings.builder || component.disabled) {

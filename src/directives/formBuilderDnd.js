@@ -88,7 +88,8 @@ module.exports = [
       var parent = $scope.parent || $scope.component;
       if (parent.type !== 'form' && parent.type !== 'resource' && component.isNew) {
         $scope.parentKey = parent.key;
-        component.key = $scope.parentKey + _upperFirst(component.key);
+        if (!component.key)
+          component.key = ($scope.parentKey || '') + _upperFirst(component.key);
       } else {
         $scope.parentKey = '';
       }
@@ -244,7 +245,7 @@ module.exports = [
           // Watch the settings label and auto set the key from it.
           var invalidRegex = /^[^A-Za-z]*|[^A-Za-z0-9\-]*/g;
           $scope.$watch('component.label', function() {
-            if ($scope.component.label && !$scope.component.lockKey && $scope.component.isNew) {
+            if ($scope.component.label && !$scope.component.lockKey && $scope.component.isNew && !$scope.component.key) {
               if ($scope.data.hasOwnProperty($scope.component.key)) {
                 delete $scope.data[$scope.component.key];
               }
