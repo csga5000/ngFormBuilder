@@ -25,6 +25,7 @@ Customization (Feature presented by this fork:)
 In some js file:
 ```
 window.FormBuilderConfig = {
+	enabled_groups: ['layout'],
 	groups: {
 		ddo: {
 			title: "Custom Components"
