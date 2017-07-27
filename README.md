@@ -54,38 +54,9 @@ window.FormBuilderConfig = {
 This would generate something like this:
 [example output](https://image.ibb.co/dGKLEk/form_ex.png)
 
-Adding Components
+Adding/Removing Components
 =================
-To add a component, add it in the config phase.
-
-```
-  angular
-    .module('myApp')
-    .config([
-      'formioComponentsProvider',
-      function (formioComponentsProvider) {
-        formioComponentsProvider.register('myfield', {
-          title: 'My Field',
-          template: 'formio/components/icons.html',
-          controller: ['$scope', function($scope) {
-          }],
-          group: 'custom',
-          icon: 'fa fa-heart-o',
-          settings: {},
-          views: []
-        });
-```
-Removing Components
-===================
-To remove default components or groups from the form builder, set them as disabled in the run phase.
-
-```
-  angular.module('myApp')
-    .run(['formioComponents', function(formioComponents) {
-      formioComponents.components.textfield.disabled = true;
-      formioComponents.groups.layout.disabled = true;
-    }]);
-```
+This was changed to my new method just because we're keeping the configurations of the inputted objects
 
 Form.io
 ==============
