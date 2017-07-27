@@ -17,7 +17,19 @@ Where ```myform``` would be a form object that is placed on the scope of the con
 
 Installation
 ================
-To install this within your application, you will first need to include the following 
+To install this within your application, you can just include "dist" files.
+
+To build:
+
+```
+npm install
+bower install
+gulp
+```
+
+Once it says it "finished default" your "dist" directory should be populated with files.  Choose the correct version of the js and css files.
+
+The "full" version should include *all* dependencies, "complete" will include most (but it won't include angular and possibly other dependencies).
 
 Customization (Feature presented by this fork:)
 ===============
