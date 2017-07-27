@@ -210,7 +210,15 @@ module.exports = ['debounce', function(debounce) {
         });
 
         if (window.FormBuilderConfig) {
+          var groupWhitelist = window.FormBuilderConfig.enabled_groups || [];
           $scope.formComponents = {};
+
+          for (var compkey in formioComponents.components) {
+            if (groupWhitelist.indexOf(formioComponents.components[compkey].group) !== -1) {
+              $scope.formComponents[compkey] = _cloneDeep(formioComponents.components[compkey]);
+            }
+          }
+
           FormBuilderConfig.fields.forEach(function(field) {
             var comp = _cloneDeep(formioComponents.components[field.component]);
             for (var compProp in field.component_properties) {
@@ -221,12 +229,19 @@ module.exports = ['debounce', function(debounce) {
             }
             $scope.formComponents['custom_field_'+field.name] = comp;
           })
+
           for (var groupKey in formioComponents.groups) {
-            formioComponents.groups[groupKey].disabled = true;
+            if (groupKey !== 'layout')
+              continue;
+
+            FormBuilderConfig.groups[groupKey] = formioComponents.groups[groupKey];
+            // formioComponents.groups[groupKey].disabled = true;
           }
-          for (groupKey in FormBuilderConfig.groups) {
-            formioComponents.groups[groupKey] = FormBuilderConfig.groups[groupKey];
-          }
+
+          formioComponents.groups = FormBuilderConfig.groups;
+          // for (groupKey in FormBuilderConfig.groups) {
+          //   formioComponents.groups[groupKey] = FormBuilderConfig.groups[groupKey];
+          // }
         }
         else {
           $scope.formComponents = _cloneDeep(formioComponents.components);
