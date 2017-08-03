@@ -8,7 +8,7 @@ module.exports = function() {
     replace: true,
     template: function() {
       return '' +
-        '<div class="form-group">' +
+        '<div form-option="tags" class="form-group">' +
         '  <label class="control-label" form-builder-tooltip="Tag the field for use in custom logic.">Field Tags</label>' +
         '  <tags-input ng-model="tags" on-tag-added="addTag($tag)" on-tag-removed="removeTag($tag)"></tags-input>' +
         '</div>';

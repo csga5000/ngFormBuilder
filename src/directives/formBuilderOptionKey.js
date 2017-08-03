@@ -6,7 +6,7 @@ module.exports = function() {
     restrict: 'E',
     replace: true,
     template: function() {
-      return '<div class="form-group" ng-class="{\'has-warning\': shouldWarnAboutEmbedding()}">' +
+      return '<div form-option="key" class="form-group" ng-class="{\'has-warning\': shouldWarnAboutEmbedding()}">' +
                 '<div class="alert alert-warning" role="alert" ng-if="!component.isNew">' +
                 'Changing the API key will cause you to lose existing submission data associated with this component.' +
                 '</div>' +

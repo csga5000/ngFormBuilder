@@ -57,7 +57,7 @@ module.exports = ['COMMON_OPTIONS', '$filter', function(COMMON_OPTIONS, $filter)
       }
 
       input.addClass('form-control');
-      return '<div class="form-group">' +
+      return '<div form-option="'+property+'" class="form-group">' +
                 '<label for="' + property + '" form-builder-tooltip="' + formioTranslate(tooltip) + '">' + formioTranslate(label) + '</label>' +
                 input.prop('outerHTML') +
               '</div>';
