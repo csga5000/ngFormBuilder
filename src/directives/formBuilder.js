@@ -21,6 +21,7 @@ module.exports = ['debounce', function(debounce) {
     },
     controller: [
       '$scope',
+      '$injector',
       'formioComponents',
       'ngDialog',
       'Formio',
@@ -30,6 +31,7 @@ module.exports = ['debounce', function(debounce) {
       '$timeout',
       function(
         $scope,
+        $injector,
         formioComponents,
         ngDialog,
         Formio,
@@ -209,8 +211,9 @@ module.exports = ['debounce', function(debounce) {
           setNumPages();
         });
 
-        if (window.FormBuilderConfig) {
-          var groupWhitelist = window.FormBuilderConfig.enabled_groups || [];
+        var config = $injector.has('FORMIO_CONFIG') && $injector.get('FORMIO_CONFIG');
+        if ( config ) {
+          var groupWhitelist = config.enabled_groups || [];
           $scope.formComponents = {};
 
           for (var compkey in formioComponents.components) {
@@ -219,7 +222,7 @@ module.exports = ['debounce', function(debounce) {
             }
           }
 
-          FormBuilderConfig.fields.forEach(function(field) {
+          config.fields.forEach(function(field) {
             var comp = _cloneDeep(formioComponents.components[field.component]);
             for (var compProp in field.component_properties) {
               comp[compProp] = field.component_properties[compProp];
@@ -234,13 +237,13 @@ module.exports = ['debounce', function(debounce) {
             if (groupKey !== 'layout')
               continue;
 
-            FormBuilderConfig.groups[groupKey] = formioComponents.groups[groupKey];
+            config.groups[groupKey] = formioComponents.groups[groupKey];
             // formioComponents.groups[groupKey].disabled = true;
           }
 
-          formioComponents.groups = FormBuilderConfig.groups;
-          // for (groupKey in FormBuilderConfig.groups) {
-          //   formioComponents.groups[groupKey] = FormBuilderConfig.groups[groupKey];
+          formioComponents.groups = config.groups;
+          // for (groupKey in config.groups) {
+          //   formioComponents.groups[groupKey] = config.groups[groupKey];
           // }
         }
         else {
